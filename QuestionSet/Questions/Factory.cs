@@ -10,7 +10,7 @@ namespace QuestionSet.Questions
         {
             var idCounter = 0;
             var questions = new List<IQuestion>();
-            var validations = new List<IValidation<TObject, TResult>>();
+            var validators = new List<IValidation<TObject, TResult>>();
 
             foreach(var spec in specs)
             {
@@ -19,11 +19,11 @@ namespace QuestionSet.Questions
                 questions.Add(question);
                 if (spec.Validation != null)
                 {
-                    validations.Add(new Validation<TObject, TResult>(question, spec.Validation));
+                    validators.Add(new Validator<TObject, TResult>(question, spec.Validation));
                 }
             }
 
-            return (questions.ToArray(), validations.ToArray());
+            return (questions.ToArray(), validators.ToArray());
         }
     }
 }

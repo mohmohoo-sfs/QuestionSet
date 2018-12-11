@@ -3,11 +3,11 @@ using QuestionSet;
 
 namespace Api.Controllers
 {
-    public abstract class ProductControllerBase : Controller
+    public abstract class ProductControllerBase<TVersionedProduct> : Controller
     {
-        private readonly IProductQuestionSet _questionSet;
+        protected readonly IProductQuestionSet<TVersionedProduct> _questionSet;
 
-        public ProductControllerBase(IProductQuestionSet questionSet)
+        public ProductControllerBase(IProductQuestionSet<TVersionedProduct> questionSet)
         {
             _questionSet = questionSet;
         }

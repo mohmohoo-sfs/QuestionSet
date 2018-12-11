@@ -16,7 +16,7 @@
 
         public bool HasBeenReferredToPsychiatrist { get; set; }
 
-        public int HeightInMeter { get; set; }
+        public decimal HeightInMeter { get; set; }
 
         public decimal WeightInKg { get; set; }
 

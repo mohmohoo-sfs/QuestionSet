@@ -1,15 +1,18 @@
 ﻿using QuestionSet.Validation;
+using System.Collections.Generic;
 using static QuestionSet.Questions.Factory<QuestionSet.Products.v1.IncomeProtectionV1, QuestionSet.Validation.ValidationResult>;
 using static QuestionSet.QuestionSpec.QuestionSpecification<QuestionSet.Products.v1.IncomeProtectionV1, QuestionSet.Validation.ValidationResult>;
 
 namespace QuestionSet.Products.v1
 {
     public class IncomeProtectionV1QuestionSet
-        : IProductQuestionSet
+        : IProductQuestionSet<IncomeProtectionV1>
     {
-        public IQuestion[] GetQuestions()
+        private (IQuestion[], IValidation<IncomeProtectionV1, ValidationResult>[]) questionWithValidators; 
+
+        public IncomeProtectionV1QuestionSet()
         {
-            var questionWithValidations = CreateQuestionWithValidations(
+            questionWithValidators = CreateQuestionWithValidations(
                 Question("Have you been a resident in the UK for at least the last 3 years and is your income liable to UK tax?")
                     .NoValidationWarning()
                     .NoAdditionalStatement(),
@@ -104,9 +107,32 @@ namespace QuestionSet.Products.v1
                             ? ValidationResult.Underwriting
                             : ValidationResult.Valid)
                     .NoAdditionalStatement());
+        }
 
-            return questionWithValidations.Item1;
 
+        public IQuestion[] GetQuestions() => questionWithValidators.Item1;
+
+        public IValidationResultDetails Validate(IncomeProtectionV1 model)
+        {
+            var validators = questionWithValidators.Item2;
+            var failedQuestions = new List<IQuestion>();
+            foreach(var validator in validators)
+            {
+                var validationResult = validator.Validate(model);
+
+                if (validationResult != ValidationResult.Valid)
+                {
+                    failedQuestions.Add(validator.Question);
+                }
+            }
+
+            return new ValidationResultDetails
+            {
+                Result = failedQuestions.Count == 0 
+                    ? ValidationResult.Valid.ToString() 
+                    : ValidationResult.Underwriting.ToString(),
+                FailedValidationQuestions = failedQuestions.ToArray()
+            };
         }
     }
 }

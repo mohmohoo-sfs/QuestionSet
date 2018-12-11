@@ -33,7 +33,7 @@ namespace QuestionSet.QuestionSpec
             {
                 QuestionText = QuestionText,
                 ValidationWarningText = desc,
-                Validation = Validation
+                Validation = validation
             };
         }
 
@@ -56,7 +56,9 @@ namespace QuestionSet.QuestionSpec
             {
                 QuestionText = QuestionText,
                 ValidationWarningText = ValidationWarningText,
+                Validation = Validation,
                 Statements = statements
+                
             };
         }
 
@@ -66,6 +68,7 @@ namespace QuestionSet.QuestionSpec
             {
                 QuestionText = QuestionText,
                 ValidationWarningText = ValidationWarningText,
+                Validation = Validation,
                 Statements = new string[] { }
             };
 
