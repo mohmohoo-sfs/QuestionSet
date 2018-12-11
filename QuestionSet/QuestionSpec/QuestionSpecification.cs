@@ -50,7 +50,7 @@ namespace QuestionSet.QuestionSpec
         {
             if (statements == null || statements.Count() == 0)
             {
-                throw new ArgumentException("At least one selectable option must be provided", "options");
+                throw new ArgumentException("At least one additional question statement must be provided", "statements");
             }
             return new QuestionSpecification<TValidatedObject, TValidationResult>
             {
