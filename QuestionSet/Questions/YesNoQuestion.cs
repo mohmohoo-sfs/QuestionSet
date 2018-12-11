@@ -11,12 +11,15 @@
 
         public string ValidationDescription { get; }
 
-        public YesNoQuestion(int id, string text, string validationDescription)
+        public string[] Options { get; }
+
+        public YesNoQuestion(int id, string text, string validationDescription, params string[] options)
         {
             Id = id;
             Text = text;
             Type = "Question to select Yes or No";
             ValidationDescription = validationDescription;
+            Options = options;
         }
     }
 }

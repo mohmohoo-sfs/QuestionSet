@@ -19,4 +19,15 @@ namespace Api.Controllers
             return base.Get();
         }
     }
+
+    public class IncomeProtectionApplication
+    {
+        public bool IsUKResidentForPast3Year { get; set; }
+
+        public bool IsIncomeLiableToUKTax { get; set; }
+
+        public bool HasUKBankOrBuildingSocietyAccount { get; set; }
+
+        public bool HasRegisteredWithMedicalPracticeForAtLeast36Months { get; set; }
+    }
 }

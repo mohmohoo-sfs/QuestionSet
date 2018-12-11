@@ -2,7 +2,7 @@
 {
     public interface IValidationTextContainer
     {
-        IQuestionSpecification Options(params string[] choices);
-        IQuestionSpecification YesNoOption();
+        IQuestionSpecification AvailableStatements(params string[] choices);
+        IQuestionSpecification NoAdditionalStatement();
     }
 }

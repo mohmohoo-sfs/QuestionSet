@@ -17,10 +17,5 @@ namespace Api.Controllers
             var questions = _questionSet.GetQuestions();
             return Ok(questions);
         }
-
-        public virtual IActionResult Validate()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

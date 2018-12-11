@@ -4,6 +4,6 @@
     {
         string QuestionText { get; }
         string ValidationText { get; }
-        IAnswerOptionItem[] OptionsItems { get; }
+        string[] Statements { get; }
     }
 }

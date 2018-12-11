@@ -14,7 +14,7 @@ namespace QuestionSet.QuestionSpec
 
         public string ValidationText { get; private set; }
 
-        public IAnswerOptionItem[] OptionsItems { get; private set; }
+        public string[] Statements { get; private set; }
 
         public static IQuestionTextContainer Text(string text)
         {
@@ -43,9 +43,9 @@ namespace QuestionSet.QuestionSpec
             };
         }
 
-        public IQuestionSpecification Options(params string[] options)
+        public IQuestionSpecification AvailableStatements(params string[] statements)
         {
-            if (options == null || options.Count() == 0)
+            if (statements == null || statements.Count() == 0)
             {
                 throw new ArgumentException("At least one selectable option must be provided", "options");
             }
@@ -53,23 +53,17 @@ namespace QuestionSet.QuestionSpec
             {
                 QuestionText = QuestionText,
                 ValidationText = ValidationText,
-                OptionsItems = options
-                    .Select((c, index) => new AnswerOptionItem { Id = ++index, Text = c })
-                    .ToArray()
+                Statements = statements
             };
         }
 
-        public IQuestionSpecification YesNoOption()
+        public IQuestionSpecification NoAdditionalStatement()
         {
             return new QuestionSpecification
             {
                 QuestionText = QuestionText,
                 ValidationText = ValidationText,
-                OptionsItems = new[] 
-                {
-                    new AnswerOptionItem { Id = 1, Text = "Yes" },
-                    new AnswerOptionItem { Id = 2, Text = "No" }
-                }
+                Statements = new string[] { }
             };
 
         }
