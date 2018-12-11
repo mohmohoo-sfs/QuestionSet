@@ -4,7 +4,7 @@ namespace QuestionSet
 {
     public interface IValidation<TObject, TResult>
     {
-        int QuestionId { get; }
+        IQuestion Question { get; }
 
         Func<TObject, TResult> ValidationCheck { get; }
 

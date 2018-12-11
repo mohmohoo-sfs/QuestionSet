@@ -5,13 +5,13 @@ namespace QuestionSet.Validation
     public class Validation<TObject, TResult>
         : IValidation<TObject, TResult>
     {
-        public int QuestionId { get; }
+        public IQuestion Question { get; }
 
         public Func<TObject, TResult> ValidationCheck { get; }
 
-        public Validation(int questionId, Func<TObject, TResult> check)
+        public Validation(IQuestion question, Func<TObject, TResult> check)
         {
-            QuestionId = questionId;
+            Question = question;
             ValidationCheck = check;
         }
 

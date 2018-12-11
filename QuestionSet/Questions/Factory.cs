@@ -1,7 +1,6 @@
 ﻿using QuestionSet.QuestionSpec;
 using QuestionSet.Validation;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace QuestionSet.Questions
 {
@@ -16,10 +15,11 @@ namespace QuestionSet.Questions
             foreach(var spec in specs)
             {
                 var questionId = ++idCounter;
-                questions.Add(new Question(questionId, spec.QuestionText, spec.ValidationWarningText, spec.Statements));
+                var question = new Question(questionId, spec.QuestionText, spec.ValidationWarningText, spec.Statements); 
+                questions.Add(question);
                 if (spec.Validation != null)
                 {
-                    validations.Add(new Validation<TObject, TResult>(questions.Last().Id, spec.Validation));
+                    validations.Add(new Validation<TObject, TResult>(question, spec.Validation));
                 }
             }
 
