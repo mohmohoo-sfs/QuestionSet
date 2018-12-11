@@ -25,7 +25,7 @@ namespace QuestionSet.QuestionSpec
             };
         }
 
-        public IValidationTextContainer ValidationWarning(string desc)
+        public IValidationTextContainer ValidationRequired(string desc)
         {
             return new QuestionSpecification
             {
@@ -34,7 +34,7 @@ namespace QuestionSet.QuestionSpec
             };
         }
 
-        public IValidationTextContainer NoValidationWarning()
+        public IValidationTextContainer ValidationNotRequired()
         {
             return new QuestionSpecification
             {
