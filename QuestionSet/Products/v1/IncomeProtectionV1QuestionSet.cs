@@ -75,7 +75,7 @@ namespace QuestionSet.Products.v1
 
                 Question("Height and Weight for BMI")
                     .ValidationWarning("If >35, full underwriting",
-                        incomeProtection => incomeProtection.HeightInMeter / incomeProtection.WeightInKg > 35
+                        incomeProtection => BmiCalculator.Calculate(incomeProtection.HeightInMeter, incomeProtection.WeightInKg) > 35
                             ? ValidationResult.Underwriting
                             : ValidationResult.Valid)
                     .NoAdditionalStatement(),
