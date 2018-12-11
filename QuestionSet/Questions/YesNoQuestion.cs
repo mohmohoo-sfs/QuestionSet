@@ -1,6 +1,6 @@
 ﻿namespace QuestionSet.Questions
 {
-    public class YesNoQuestion
+    public class Question
         : IQuestion
     {
         public int Id { get; }
@@ -13,7 +13,7 @@
 
         public string[] Statements { get; }
 
-        public YesNoQuestion(int id, string text, string validationDescription, params string[] availableStatements)
+        public Question(int id, string text, string validationDescription, params string[] availableStatements)
         {
             Id = id;
             Text = text;

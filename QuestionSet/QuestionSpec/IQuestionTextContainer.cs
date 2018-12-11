@@ -2,7 +2,7 @@
 {
     public interface IQuestionTextContainer
     {
-        IValidationTextContainer Validation(string desc);
-        IValidationTextContainer NoValidation();
+        IValidationTextContainer ValidationWarning(string desc);
+        IValidationTextContainer NoValidationWarning();
     }
 }

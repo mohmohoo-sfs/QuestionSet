@@ -12,28 +12,28 @@ namespace QuestionSet.Products.v1
 
                 .Init()
 
-                .YesNo(
+                .Create(
                     QuestionSpecification
                         .Text( "Have you been a resident in the UK for at least the last 3 years and is your income liable to UK tax?")
-                        .NoValidation()
+                        .NoValidationWarning()
                         .NoAdditionalStatement())
 
-                .YesNo(
+                .Create(
                     QuestionSpecification
                         .Text("Do you have a UK Bank or Building Society account?")
-                        .NoValidation()
+                        .NoValidationWarning()
                         .NoAdditionalStatement())
 
-                .YesNo(
+                .Create(
                     QuestionSpecification
                         .Text("Have you been registered with a UK medical practice for at least 36 months prior to this application?")
-                        .NoValidation()
+                        .NoValidationWarning()
                         .NoAdditionalStatement())
 
-                .YesNo(
+                .Create(
                     QuestionSpecification
                         .Text("Does any part of your paid or unpaid occupation(s) include any of the following?")
-                        .Validation("If yes, full underwriting")
+                        .ValidationWarning("If yes, full underwriting")
                         .AvailableStatements("Any branch of the Armed Forces",
                                 "Handling explosives",
                                 "Underwater duties",
@@ -45,16 +45,16 @@ namespace QuestionSet.Products.v1
                                 "Fire-fighters, including reserve or retained Fire-fighters",
                                 "Working on board sea or ocean going vessels"))
 
-                .YesNo(
+                .Create(
                     QuestionSpecification
                         .Text("Have you ever made an application to The Shepherds Friendly Society that has been postponed, declined, offered on special terms or cancelled?")
-                        .Validation("If yes, full underwriting")
+                        .ValidationWarning("If yes, full underwriting")
                         .NoAdditionalStatement())
 
-                .YesNo(
+                .Create(
                     QuestionSpecification
                         .Text("Do any of the following statements apply to you?")
-                        .Validation("If yes, full underwriting")
+                        .ValidationWarning("If yes, full underwriting")
                         .AvailableStatements("I am currently unable to work or am working reduced hours or on restricted duties due to sickness or accident.",
                                 "I have suffered from symptoms of chronic fatigue syndrome, ME or fibromyalgia in the last 3 years.",
                                 "I have suffered from cancer or malignant tumour which has been treated with radiotherapy or chemotherapy in the last 3 years.",
@@ -68,40 +68,40 @@ namespace QuestionSet.Products.v1
                                 "I have been diagnosed with HIV or I am awaiting the results of a HIV test.",
                                 "I have undergone major organ transplant."))
 
-                .YesNo(
+                .Create(
                     QuestionSpecification
                         .Text("Have you ever been referred to see a psychiatrist.")
-                        .Validation("If yes, full underwriting")
+                        .ValidationWarning("If yes, full underwriting")
                         .NoAdditionalStatement())
 
-                .FreeText(
+                .Create(
                     QuestionSpecification
                         .Text("Height and Weight for BMI")
-                        .Validation("If >35, full underwriting")
+                        .ValidationWarning("If >35, full underwriting")
                         .NoAdditionalStatement())
 
-                .FreeText(
+                .Create(
                     QuestionSpecification
                         .Text("How many cigarettes do you currently smoke per day?")
-                        .Validation("If >20pc, full underwriting")
+                        .ValidationWarning("If >20pc, full underwriting")
                         .NoAdditionalStatement())
 
-                .YesNo(
+                .Create(
                     QuestionSpecification
                         .Text("Do you consume more than 30 units of alcohol per week or have you ever been dependant on alcohol or been advised to reduce your intake?")
-                        .Validation("If yes, full underwriting")
+                        .ValidationWarning("If yes, full underwriting")
                         .NoAdditionalStatement())
 
-                .YesNo(
+                .Create(
                     QuestionSpecification
                         .Text("Have you used cannabis within the past year, or do you intend to begin using cannabis?")
-                        .Validation("If yes, full underwriting")
+                        .ValidationWarning("If yes, full underwriting")
                         .NoAdditionalStatement())
 
-                .YesNo(
+                .Create(
                     QuestionSpecification
                         .Text("Other than cannabis, have you ever or do you intend to use any recreational or non prescription drugs (e.g. cannabis, ecstacy, cocaine, heroin, annabolic steroids etc?")
-                        .Validation("If yes, full underwriting")
+                        .ValidationWarning("If yes, full underwriting")
                         .NoAdditionalStatement())
                 .Completed();
 
