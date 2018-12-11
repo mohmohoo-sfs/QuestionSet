@@ -12,7 +12,8 @@ namespace QuestionSet.Products.v1
 
         public IncomeProtectionV1QuestionSet()
         {
-            questionWithValidators = CreateQuestionWithValidations(
+            var questionSpecs = new[]
+            {
                 Question("Have you been a resident in the UK for at least the last 3 years and is your income liable to UK tax?")
                     .NoValidationWarning()
                     .NoAdditionalStatement(),
@@ -106,7 +107,9 @@ namespace QuestionSet.Products.v1
                         incomeProtection => incomeProtection.HasUsedOrIntendToUseAnyOtherReacreationalDrug
                             ? ValidationResult.Underwriting
                             : ValidationResult.Valid)
-                    .NoAdditionalStatement());
+                    .NoAdditionalStatement()
+            };
+            questionWithValidators = CreateQuestionWithValidations(questionSpecs);
         }
 
 
