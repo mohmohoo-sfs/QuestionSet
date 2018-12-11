@@ -20,7 +20,7 @@ namespace Api.Controllers
             return base.Get();
         }
 
-        [HttpPost("Validate")]
+        [HttpPost("validate")]
         [ProducesResponseType(200, Type = typeof(IValidation<IncomeProtectionV1, ValidationResult>[]))]
         public IActionResult Validate([FromBody]IncomeProtectionV1 model)
         {
