@@ -1,8 +1,8 @@
 ﻿namespace QuestionSet.QuestionSpec
 {
-    public interface IValidationTextContainer
+    public interface IValidationTextContainer<TValidatedObject, TValidationResult>
     {
-        IQuestionSpecification AvailableStatements(params string[] choices);
-        IQuestionSpecification NoAdditionalStatement();
+        IQuestionSpecification<TValidatedObject, TValidationResult> AvailableStatements(params string[] choices);
+        IQuestionSpecification<TValidatedObject, TValidationResult> NoAdditionalStatement();
     }
 }

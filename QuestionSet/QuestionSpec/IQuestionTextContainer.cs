@@ -1,8 +1,10 @@
-﻿namespace QuestionSet.QuestionSpec
+﻿using System;
+
+namespace QuestionSet.QuestionSpec
 {
-    public interface IQuestionTextContainer
+    public interface IQuestionTextContainer<TValidatedObject, TValidationResult>
     {
-        IValidationTextContainer ValidationRequired(string desc);
-        IValidationTextContainer ValidationNotRequired();
+        IValidationTextContainer<TValidatedObject, TValidationResult> ValidationWarning(string desc, Func<TValidatedObject, TValidationResult> validation);
+        IValidationTextContainer<TValidatedObject, TValidationResult> NoValidationWarning();
     }
 }

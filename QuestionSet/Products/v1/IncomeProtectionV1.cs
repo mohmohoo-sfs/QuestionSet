@@ -16,7 +16,7 @@
 
         public bool HasBeenReferredToPsychiatrist { get; set; }
 
-        public int HeightInCentimeter { get; set; }
+        public int HeightInMeter { get; set; }
 
         public decimal WeightInKg { get; set; }
 
@@ -26,6 +26,6 @@
 
         public bool HasUsedOrIntendToUseCannabis { get; set; }
 
-        public bool HasUsedOrIntendToUseAnyOtherDrug { get; set; }
+        public bool HasUsedOrIntendToUseAnyOtherReacreationalDrug { get; set; }
     }
 }

@@ -1,5 +1,6 @@
-﻿using QuestionSet.Questions;
-using QuestionSet.QuestionSpec;
+﻿using QuestionSet.Validation;
+using static QuestionSet.Questions.Factory<QuestionSet.Products.v1.IncomeProtectionV1, QuestionSet.Validation.ValidationResult>;
+using static QuestionSet.QuestionSpec.QuestionSpecification<QuestionSet.Products.v1.IncomeProtectionV1, QuestionSet.Validation.ValidationResult>;
 
 namespace QuestionSet.Products.v1
 {
@@ -8,53 +9,47 @@ namespace QuestionSet.Products.v1
     {
         public IQuestion[] GetQuestions()
         {
-            return QuestionFactory
+            var questionWithValidations = CreateQuestionWithValidations(
+                Question("Have you been a resident in the UK for at least the last 3 years and is your income liable to UK tax?")
+                    .NoValidationWarning()
+                    .NoAdditionalStatement(),
 
-                .Init()
+                Question("Do you have a UK Bank or Building Society account?")
+                    .NoValidationWarning()
+                    .NoAdditionalStatement(),
 
-                .Create(
-                    QuestionSpecification
-                        .Text( "Have you been a resident in the UK for at least the last 3 years and is your income liable to UK tax?")
-                        .ValidationNotRequired()
-                        .NoAdditionalStatement())
+                Question("Have you been registered with a UK medical practice for at least 36 months prior to this application?")
+                    .NoValidationWarning()
+                    .NoAdditionalStatement(),
 
-                .Create(
-                    QuestionSpecification
-                        .Text("Do you have a UK Bank or Building Society account?")
-                        .ValidationNotRequired()
-                        .NoAdditionalStatement())
+                Question("Does any part of your paid or unpaid occupation(s) include any of the following?")
+                    .ValidationWarning("If yes, full underwriting",
+                        incomeProtection => incomeProtection.HasSpecifiedOccupation
+                            ? ValidationResult.Underwriting
+                            : ValidationResult.Valid)
+                    .AvailableStatements("Any branch of the Armed Forces",
+                            "Handling explosives",
+                            "Underwater duties",
+                            "Oil Rig or offshore work",
+                            "Professional or Semi Professional Sports Persons",
+                            "Nightclub Security Personnel, Bailiffs, or Bodyguards",
+                            "Work with animals",
+                            "Police Community Support Officers or Special Constables",
+                            "Fire-fighters, including reserve or retained Fire-fighters",
+                            "Working on board sea or ocean going vessels"),
 
-                .Create(
-                    QuestionSpecification
-                        .Text("Have you been registered with a UK medical practice for at least 36 months prior to this application?")
-                        .ValidationNotRequired()
-                        .NoAdditionalStatement())
+                Question("Have you ever made an application to The Shepherds Friendly Society that has been postponed, declined, offered on special terms or cancelled?")
+                        .ValidationWarning("If yes, full underwriting",
+                            incomeProtection => incomeProtection.HasApplicationToShepherdsWithSpecifiedStatus
+                                ? ValidationResult.Underwriting
+                                : ValidationResult.Valid)
+                        .NoAdditionalStatement(),
 
-                .Create(
-                    QuestionSpecification
-                        .Text("Does any part of your paid or unpaid occupation(s) include any of the following?")
-                        .ValidationRequired("If yes, full underwriting")
-                        .AvailableStatements("Any branch of the Armed Forces",
-                                "Handling explosives",
-                                "Underwater duties",
-                                "Oil Rig or offshore work",
-                                "Professional or Semi Professional Sports Persons",
-                                "Nightclub Security Personnel, Bailiffs, or Bodyguards",
-                                "Work with animals",
-                                "Police Community Support Officers or Special Constables",
-                                "Fire-fighters, including reserve or retained Fire-fighters",
-                                "Working on board sea or ocean going vessels"))
-
-                .Create(
-                    QuestionSpecification
-                        .Text("Have you ever made an application to The Shepherds Friendly Society that has been postponed, declined, offered on special terms or cancelled?")
-                        .ValidationRequired("If yes, full underwriting")
-                        .NoAdditionalStatement())
-
-                .Create(
-                    QuestionSpecification
-                        .Text("Do any of the following statements apply to you?")
-                        .ValidationRequired("If yes, full underwriting")
+                Question("Do any of the following statements apply to you?")
+                        .ValidationWarning("If yes, full underwriting",
+                            incomeProtection => incomeProtection.HasSpecifiedIllnessOrCondition
+                                ? ValidationResult.Underwriting
+                                : ValidationResult.Valid)
                         .AvailableStatements("I am currently unable to work or am working reduced hours or on restricted duties due to sickness or accident.",
                                 "I have suffered from symptoms of chronic fatigue syndrome, ME or fibromyalgia in the last 3 years.",
                                 "I have suffered from cancer or malignant tumour which has been treated with radiotherapy or chemotherapy in the last 3 years.",
@@ -66,44 +61,51 @@ namespace QuestionSet.Products.v1
                                 "I am suffering from paralysis, paraplegia or quadriplegia caused by damage to my spinal cord.",
                                 "I have suffered from or been diagnosed with diabetes (other than during pregnancy)",
                                 "I have been diagnosed with HIV or I am awaiting the results of a HIV test.",
-                                "I have undergone major organ transplant."))
+                                "I have undergone major organ transplant."),
 
-                .Create(
-                    QuestionSpecification
-                        .Text("Have you ever been referred to see a psychiatrist.")
-                        .ValidationRequired("If yes, full underwriting")
-                        .NoAdditionalStatement())
+                Question("Have you ever been referred to see a psychiatrist.")
+                        .ValidationWarning("If yes, full underwriting",
+                            incomeProtection => incomeProtection.HasBeenReferredToPsychiatrist
+                                ? ValidationResult.Underwriting
+                                : ValidationResult.Valid)
+                        .NoAdditionalStatement(),
 
-                .Create(
-                    QuestionSpecification
-                        .Text("Height and Weight for BMI")
-                        .ValidationRequired("If >35, full underwriting")
-                        .NoAdditionalStatement())
+                Question("Height and Weight for BMI")
+                        .ValidationWarning("If >35, full underwriting",
+                            incomeProtection => incomeProtection.HeightInMeter / incomeProtection.WeightInKg > 35
+                                ? ValidationResult.Underwriting
+                                : ValidationResult.Valid)
+                        .NoAdditionalStatement(),
 
-                .Create(
-                    QuestionSpecification
-                        .Text("How many cigarettes do you currently smoke per day?")
-                        .ValidationRequired("If >20pc, full underwriting")
-                        .NoAdditionalStatement())
+                Question("How many cigarettes do you currently smoke per day?")
+                        .ValidationWarning("If >20pc, full underwriting",
+                            incomeProtection => incomeProtection.CigarettesPerDay > 20
+                                ? ValidationResult.Underwriting
+                                : ValidationResult.Valid)
+                        .NoAdditionalStatement(),
 
-                .Create(
-                    QuestionSpecification
-                        .Text("Do you consume more than 30 units of alcohol per week or have you ever been dependant on alcohol or been advised to reduce your intake?")
-                        .ValidationRequired("If yes, full underwriting")
-                        .NoAdditionalStatement())
+                Question("Do you consume more than 30 units of alcohol per week or have you ever been dependant on alcohol or been advised to reduce your intake?")
+                        .ValidationWarning("If yes, full underwriting",
+                            incomeProtection => incomeProtection.HasOrHadAlcoholDependency
+                                ? ValidationResult.Underwriting
+                                : ValidationResult.Valid)
+                        .NoAdditionalStatement(),
 
-                .Create(
-                    QuestionSpecification
-                        .Text("Have you used cannabis within the past year, or do you intend to begin using cannabis?")
-                        .ValidationRequired("If yes, full underwriting")
-                        .NoAdditionalStatement())
+                Question("Have you used cannabis within the past year, or do you intend to begin using cannabis?")
+                        .ValidationWarning("If yes, full underwriting",
+                            incomeProtection => incomeProtection.HasUsedOrIntendToUseCannabis
+                                ? ValidationResult.Underwriting
+                                : ValidationResult.Valid)
+                        .NoAdditionalStatement(),
 
-                .Create(
-                    QuestionSpecification
-                        .Text("Other than cannabis, have you ever or do you intend to use any recreational or non prescription drugs (e.g. cannabis, ecstacy, cocaine, heroin, annabolic steroids etc?")
-                        .ValidationRequired("If yes, full underwriting")
-                        .NoAdditionalStatement())
-                .Completed();
+                Question("Other than cannabis, have you ever or do you intend to use any recreational or non prescription drugs (e.g. cannabis, ecstacy, cocaine, heroin, annabolic steroids etc?")
+                        .ValidationWarning("If yes, full underwriting",
+                            incomeProtection => incomeProtection.HasUsedOrIntendToUseAnyOtherReacreationalDrug
+                        ? ValidationResult.Underwriting
+                        : ValidationResult.Valid)
+                        .NoAdditionalStatement());
+
+            return questionWithValidations.Item1;
 
         }
     }

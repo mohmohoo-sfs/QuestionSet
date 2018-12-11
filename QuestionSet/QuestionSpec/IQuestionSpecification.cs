@@ -1,9 +1,12 @@
-﻿namespace QuestionSet.QuestionSpec
+﻿using System;
+
+namespace QuestionSet.QuestionSpec
 {
-    public interface IQuestionSpecification
+    public interface IQuestionSpecification<TObject, TResult>
     {
         string QuestionText { get; }
-        string ValidationText { get; }
+        string ValidationWarningText { get; }
         string[] Statements { get; }
+        Func<TObject, TResult> Validation { get; }
     }
 }
