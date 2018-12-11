@@ -1,6 +1,4 @@
 ﻿using QuestionSet.QuestionSpec;
-using QuestionSet.Validator;
-using System;
 using System.Linq;
 
 namespace QuestionSet.Questions
